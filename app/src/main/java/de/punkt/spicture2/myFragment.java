@@ -93,10 +93,9 @@ public class myFragment extends Fragment {
         //Bundle filename = new Bundle();
         //filename = this.getIntent().getExtras();
         //filenamen = filename.getString("filename");
-        filenamen = "HansWurst";
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/DCIM/CAMERASAMPLE/"+filenamen.substring(0,filenamen.length()-4)+".3gp";
-
+        //filenamen = "HansWurst";
+        //mFileName =  this.getActivity().getFilesDir().getAbsolutePath();
+        //mFileName += filenamen.substring(0,filenamen.length()-4)+".3gp";
 
         mRecordButton = new RecordButton(this.getActivity());
 
@@ -161,9 +160,6 @@ public class myFragment extends Fragment {
         public void onFragmentInteraction(String str);
     }
 
-
-
-
     private void onRecord(boolean start) {
         if (start) {
             startRecording();
@@ -197,6 +193,10 @@ public class myFragment extends Fragment {
     }
 
     private void startRecording() {
+        filenamen = "HansWurst";
+        mFileName =  this.getActivity().getFilesDir().getAbsolutePath();
+        mFileName += filenamen.substring(0,filenamen.length()-4)+".3gp";
+
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
