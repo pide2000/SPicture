@@ -1,6 +1,7 @@
 package de.punkt.spicture2;
 
 import android.app.Activity;
+import android.media.MediaRecorder;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -19,7 +20,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.content.Context;
+import android.media.MediaPlayer;
+
+import java.io.IOException;
+import java.security.Timestamp;
 
 
 public class main extends ActionBarActivity
@@ -34,6 +41,11 @@ public class main extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+
+    private String filenamen;
+    private static String mFileName = null;
+    private MediaRecorder mRecorder = null;
+    boolean mStartRecording = true;
 
     //Will be called when the transaction is "clicked"
     public void onFragmentInteraction(String str){
@@ -162,6 +174,57 @@ public class main extends ActionBarActivity
         }
 
 
+    }
+
+    public void onClick(View v) {
+
+        Button mButton=(Button)v.findViewById(R.id.mRecordButton);
+
+        onRecord(mStartRecording);
+
+        if (mStartRecording) {
+            mButton.setText("Stop recording");
+        } else {
+            mButton.setText("Start recording");
+        }
+        mStartRecording = !mStartRecording;
+    }
+
+
+    private void onRecord(boolean start) {
+        if (start) {
+            startRecording();
+        } else {
+            stopRecording();
+        }
+    }
+
+    private void startRecording() {
+        filenamen = "HansWurst";
+        mFileName =  this.getFilesDir().getAbsolutePath();
+        Timestamp ts = new Timestamp();
+        System.currentTimeMillis();
+        mFileName += filenamen.substring(0,filenamen.length()-4)+".3gp";
+
+        mRecorder = new MediaRecorder();
+        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder.setOutputFile(mFileName);
+        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        try {
+            mRecorder.prepare();
+        } catch (IOException e) {
+            Log.e("Recorrrder", "prepare() failed");
+        }
+
+        mRecorder.start();
+    }
+
+    private void stopRecording() {
+        mRecorder.stop();
+        mRecorder.release();
+        mRecorder = null;
     }
 
     /**

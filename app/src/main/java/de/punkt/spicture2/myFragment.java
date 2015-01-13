@@ -50,7 +50,7 @@ public class myFragment extends Fragment {
     private MediaPlayer mPlayer = null;
 
     private FinishButton   mFinishButton = null;
-    private String          filenamen;
+    private String         filenamen;
 
     /**
      * Use this factory method to create a new instance of
@@ -97,14 +97,14 @@ public class myFragment extends Fragment {
         //mFileName =  this.getActivity().getFilesDir().getAbsolutePath();
         //mFileName += filenamen.substring(0,filenamen.length()-4)+".3gp";
 
-        mRecordButton = new RecordButton(this.getActivity());
+        //mRecordButton = new RecordButton(this.getActivity());
 
         LinearLayout fl = (LinearLayout)rootView.findViewById(R.id.fl);
-        fl.addView(mRecordButton,
-                new LinearLayout.LayoutParams(
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT,
-                        0));
+//        fl.addView(mRecordButton,
+//                new LinearLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT,
+//                        0));
         mPlayButton = new PlayButton(this.getActivity());
         fl.addView(mPlayButton,
                 new LinearLayout.LayoutParams(
@@ -217,6 +217,9 @@ public class myFragment extends Fragment {
         mRecorder.release();
         mRecorder = null;
     }
+
+
+
 
     class RecordButton extends Button {
         boolean mStartRecording = true;
